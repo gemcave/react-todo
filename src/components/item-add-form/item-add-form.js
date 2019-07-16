@@ -24,7 +24,6 @@ onSubmit = (e) => {
 		return (
 			<form className="item-add-form d-flex"
 						onSubmit={this.onSubmit}>
-			{this.state.label}
 			<input type="text"
 							className="form-control"
 							onChange={this.onLabelChange}

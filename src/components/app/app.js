@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import ReactDOM from 'react-dom';
 
 import AppHeader from '../app-header';
 import SearchPanel from '../search-panel';
@@ -15,9 +14,9 @@ export default class App  extends Component  {
  maxId = 100;
 state = { 
 		todoData : [
-			this.createTodoItem('Drink Coffee 2'),
-			this.createTodoItem('Make Awesome App'),
-			this.createTodoItem('Draw like Steve Rude')
+			this.createTodoItem('Drink Coffee'),
+			this.createTodoItem('Make App'),
+			this.createTodoItem('Learn Language')
 			],
 		term: "",
 		filter: "all" // all, active, done
@@ -35,11 +34,6 @@ state = {
 	deleteItem = (id) =>{
 		this.setState(({todoData}) => {
 			const idx = todoData.findIndex((el) => el.id === id);
-			//todoData.splice(idx, 1); -- Так делать нельзя?
-
-			// const before = todoData.slice(0, idx);
-			// const after = todoData.slice(idx+1);
-
 			const newArray = [
 				...todoData.slice(0, idx),
 				...todoData.slice(idx+1)
@@ -52,18 +46,9 @@ state = {
 	};
 
 
-	deleteDoneItems = (id) =>{
+	deleteDoneItems = () =>{
 		this.setState(({todoData}) => {
-			const idx = todoData.findIndex((el) => el.id === id);
-			//todoData.splice(idx, 1); -- Так делать нельзя?
-
-			// const before = todoData.slice(0, idx);
-			// const after = todoData.slice(idx+1);
-
-			const newArray = [
-				...todoData.slice(0, idx),
-				...todoData.slice(idx+1)
-			];
+			const newArray = todoData.filter((el) => el.done !== true);
 
 			return {
 				todoData: newArray
@@ -72,10 +57,7 @@ state = {
 	};
 
 	addItem = (text) => {
-		// console.log('Added', text);
-		// generate id?
 		const newItem = this.createTodoItem(text);
-		// add element to array
 		this.setState(({todoData})=>{
 			
 			const newArr = [
@@ -175,8 +157,7 @@ onFilterChange = (filter) => {
 
 
 		<ItemAddForm onItemAdded={this.addItem} /> 
-		{/* <DeleteDoneItem />  */}
-		<DeleteDoneItem onClick={() => console.log('1')} /> 
+		<DeleteDoneItem deleteDone={this.deleteDoneItems} /> 
 	</div>
 	);
 };
